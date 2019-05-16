@@ -179,6 +179,14 @@
         }
         h2 {
             font-family: "Open Sans";
+            font-size: 2vw;
+            font-weight: normal;
+            position: relative;
+            top: 0px;
+            margin: 0;
+        }
+        h3 {
+            font-family: "Open Sans";
             font-size: 1vw;
             font-weight: normal;
             position: relative;
@@ -324,14 +332,14 @@
             <ul id="items">
                 <li><img src="images/icon_checkin.png">
                     <div class="subtitles">
-                        <h2>Foursquare check-ins</h2>
+                        <h3>Foursquare check-ins</h3>
                         <p>In order to visualize the working activity in different cities of the world, we made use of Foursquare check-ins for an 18th month period between 2012 and 2013. Due to the large amount of data, we decided to keep the check-ins for only a certain number of countries, in particular for the UK, the US, Brazil, Singapore, Australia and South Africa. The count of check-ins that we ended up with for each country is the following:</p>
                         <p>Brazil: 156759 US: 131250 UK: 14821 Singapore: 6020 Australia: 4295 South Africa: 3031</p>
                     </div>
                 </li>
                 <li><img src="images/icon_business.png">
                     <div class="subtitles">
-                        <h2>Businesses in London</h2>
+                        <h3>Businesses in London</h3>
                         <p>The business data for London was derived from the Companies House and included informationabout active businesses up until 2017. Due to the high number of businesses and the great variety of business sectors, we organized the businesses and separated them into 10 categories based on their SIC code, that means the business sector they belong to:</p>
                         <p>- Agriculture, Forestry, Fishing - Mining - Construction - Manufacturing - Transportation & Public Utilities</p>
                         <p>- Wholesale Trade - Retail Trade - Finance Insurance, Real Estate - Services</p>
@@ -339,7 +347,7 @@
                 </li>
                 <li><img src="images/icon_tube.png">
                     <div class="subtitles">
-                        <h2>Transportation activity in London</h2>
+                        <h3>Transportation activity in London</h3>
                         <p>The data transportation for London was derived from TFL. The original dataset included the count of oyster card tap-outs with 15-minute intervals for a random weekday in November 2017. For the purpose of our study, we aggregated the data and converted it into hourly.</p>
                         <p>The following part consists of the visualization of our analysis, which was made using Javascript, Mapbox Studio, HTML, Python and CSS.</p>
                     </div>
@@ -366,6 +374,11 @@
 
         <!-- Page4: Business -->
         <div class="section section4">
+            <!--Title-->
+            <div class="overlay">
+                <h2>London Businesses Choropleth Map</h2>
+                <p class="credit">Data source: <a href="https://data.london.gov.uk/dataset/directory-of-london-businesses">London Business Data</a>.</p>
+             </div>
             <!--Map1: The Number of Whole Indusrty-->
             <div class="slide">
                 <iframe src="business/whole.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
@@ -386,6 +399,11 @@
 
         <!-- Page5: Tube Counts-->
         <div class="section section5">
+            <!--Title-->
+            <div class="overlay">
+                <h2>Tube station exits in London, 2017</h2>
+                <p class="credit">Data source: <a href="https://tfl.gov.uk/">TFL</a>.</p>
+             </div>
             <!--Map-->
             <iframe src="tube/tube stations_count of exits.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
         </div>
