@@ -34,6 +34,36 @@
             background-size: cover;
         }
         
+        /* The format of the second page */
+        /* The style of the content */
+        #items {
+            margin: auto;
+            width: 70%;
+            height: 150vw;
+            padding: 0;
+        }
+        #items li {
+            display: block;
+            margin: 25px;
+            -webkit-transform: scale(0.5, 0.5);
+            transform: scale(0.5, 0.5);
+            opacity: 0;
+            transition: all 3s;
+        }
+        /* The style of the image */
+        #items li img {
+            width: 3vw;
+            position: absolute;
+            top: 7vw;
+            left: 0;
+        }
+        .subtitles {
+            position: relative;
+            top: 90px;
+            left: 100px;
+            text-align: left;
+        }
+        
         /* Navigation options */
         #menu {
             position: fixed;
@@ -134,11 +164,13 @@
         .title-text {
             text-align: left;
             position: relative;
-            left: 2%;
+            top: 50px;
             width: 70%;
-            font-family: "Open Sans";
+            margin: auto;
+            font-family: "Lato";
             font-weight: normal;
-            font-size: 1.2vw;
+            font-size: 1.1vw;
+            animation-delay: 3s;
             animation: fadeIn 6s;
         }
         h1 {
@@ -288,8 +320,31 @@
         
         <!-- Page2: Introduction Page -->
         <div class="section section2">
-            <div class="title-text">This project looks into working hour patterns in different cities across the globe using work-related check-ins and then proceeds with a further investigation into London’s working landscape, based on a combination of social media check-ins, transportation and business data.</div>
-            <div class="title-text">The importance of investigating the working culture of a city relates to the influence of working hours on the productivity and the well-being of people. It is argued that although longer working hours can lead to higher productivity, after a certain threshold of hours worked, the effect on productivity starts to decrease. Regarding well-being, due to its complex nature, it does not depend exclusively on the number of working hours but is affected by other factors as well. However, its relation to working hours confirms the importance of studying the latter.</div>
+            <div class="title-text">This project looks into working hour patterns in different cities across the globe using work-related check-ins and then proceeds with a further investigation into London’s working landscape, based on a combination of social media check-ins, transportation and business data. The importance of investigating the working culture of a city relates to the influence of working hours on the productivity and the well-being of people. It is argued that although longer working hours can lead to higher productivity, after a certain threshold of hours worked, the effect on productivity starts to decrease. Regarding well-being, due to its complex nature, it does not depend exclusively on the number of working hours but is affected by other factors as well. However, its relation to working hours confirms the importance of studying the latter.</div>
+            <ul id="items">
+                <li><img src="images/icon_checkin.png">
+                    <div class="subtitles">
+                        <h2>Foursquare check-ins</h2>
+                        <p>In order to visualize the working activity in different cities of the world, we made use of Foursquare check-ins for an 18th month period between 2012 and 2013. Due to the large amount of data, we decided to keep the check-ins for only a certain number of countries, in particular for the UK, the US, Brazil, Singapore, Australia and South Africa. The count of check-ins that we ended up with for each country is the following:</p>
+                        <p>Brazil: 156759 US: 131250 UK: 14821 Singapore: 6020 Australia: 4295 South Africa: 3031</p>
+                    </div>
+                </li>
+                <li><img src="images/icon_business.png">
+                    <div class="subtitles">
+                        <h2>Businesses in London</h2>
+                        <p>The business data for London was derived from the Companies House and included informationabout active businesses up until 2017. Due to the high number of businesses and the great variety of business sectors, we organized the businesses and separated them into 10 categories based on their SIC code, that means the business sector they belong to:</p>
+                        <p>- Agriculture, Forestry, Fishing - Mining - Construction - Manufacturing - Transportation & Public Utilities</p>
+                        <p>- Wholesale Trade - Retail Trade - Finance Insurance, Real Estate - Services</p>
+                    </div>
+                </li>
+                <li><img src="images/icon_tube.png">
+                    <div class="subtitles">
+                        <h2>Transportation activity in London</h2>
+                        <p>The data transportation for London was derived from TFL. The original dataset included the count of oyster card tap-outs with 15-minute intervals for a random weekday in November 2017. For the purpose of our study, we aggregated the data and converted it into hourly.</p>
+                        <p>The following part consists of the visualization of our analysis, which was made using Javascript, Mapbox Studio, HTML, Python and CSS.</p>
+                    </div>
+                </li>
+            </ul>
             <img src="images/arrows_down.png" alt="Scroll down" class="downarrow" title="Scroll down to explore!">
         </div>
 
