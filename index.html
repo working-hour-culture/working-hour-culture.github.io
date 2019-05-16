@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Meta & Title-->
+    <meta charset="utf-8">
+    <meta name="Creator" content="CASA - Group 6">
+    <meta name='Date' content='20th May 2019'>
+    <title>24-Hour Working People</title>
+
+    <!--Full Page-->
+    <link rel="stylesheet" type="text/css" href="https://alvarotrigo.com/fullPage/jquery.fullPage.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://alvarotrigo.com/fullPage/jquery.fullpage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+    <!--Style Sheet-->
+    <!--Reference: https://fonts.google.com/-->
+    <link href='https://fonts.googleapis.com/css?family=Yesteryear' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    
+    <style>
+        /* Navigation options */
+        #menu {
+            position: fixed;
+            top: 10px;
+            right: 5px;
+            height: 10px;
+            width: 50px;
+            z-index: 70;
+            padding: 0;
+            margin: 0;
+        }
+        #menu li {
+            display: block;
+            float: right;
+            margin: 5px;
+            width: 2.8vw;
+            height: 2.5vw;
+            background: rgba(100, 100, 100, 0.6);
+            border-radius: 0.75vw;
+        }
+        /* Navigation image style */
+        #menu li img {
+            width: 2vw;
+            position: relative;
+            top: 10%;
+            left: 15%;
+        }
+        #menu li.active {
+            background: #666;
+            background: rgba(255, 255, 255, 0.7);
+            color: #fff;
+        }
+        #menu li:hover {
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+        
+        /* Arrow style */
+        .fp-controlArrow {
+            top: 50%;
+        }
+        .fp-controlArrow.fp-prev {
+            left: 0;
+            border: none;
+            width: 50px;
+            height: 50px;
+            background: url(arrow_left.png) no-repeat;
+        }
+        .fp-controlArrow.fp-next {
+            right: 0;
+            border: none;
+            width: 50px;
+            height: 50px;
+            background: url(arrow_right.png) no-repeat;
+        }
+        .downarrow {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            width: 2vw;
+            animation-delay: 7s;
+            animation: slidefromBottom 2s;
+        }
+        
+        /* Page style */
+        .section {
+            text-align: center;
+            font: "Lato";
+            color: #fff;
+            background-position: center center;
+            margin: 0;
+        }
+        .section1 {
+            background-size: cover;
+        }
+        a:link {
+            color: white;
+        }
+        a:visited {
+            color: lightgray;
+        }
+        
+        /* Text style */
+        /* Page1 */
+        .title-name {
+            text-align: left;
+            position: relative;
+            left: 2%;
+            font-family: "Yesteryear";
+            font-size: 7vw;
+            font-weight: normal;
+            animation: fadeIn 6s;
+        }
+        .title-text {
+            text-align: left;
+            position: relative;
+            left: 2%;
+            width: 70%;
+            font-family: "Open Sans";
+            font-weight: normal;
+            font-size: 1.2vw;
+            animation: fadeIn 6s;
+        }
+        h1 {
+            font-family: "Open Sans";
+            font-size: 3vw;
+        }
+        h2 {
+            font-family: "Open Sans";
+            font-size: 2vw;
+            font-weight: normal;
+            position: relative;
+            top: 0px;
+            margin: 0;
+        }
+        p {
+            font-family: "Lato";
+            font-size: 0.9vw;
+            position: relative;
+            margin: 0;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+        
+        /* Title in each page */
+        .overlay {
+            font-family: "Open Sans";
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            z-index: 2;
+            padding-top: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 5px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+            box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+            color: white;
+            background-color: black;
+            opacity: 0.8;
+            text-align: left;
+        }
+        
+        /* The last page - "About" */
+        #About {
+            font-family: "Open Sans";
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 75;
+        }
+        #AboutText {
+            font-family: "Open Sans";
+            position: absolute;
+            text-align: left;
+            top: 20%;
+            left: 40%;
+            color: white;
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slidefromBottom {
+            from {
+                opacity: 0;
+                bottom: -20px;
+            }
+            to {
+                opacity: 1;
+                bottom: 30px;
+            }
+        }
+        .active h1 {
+            -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+            opacity: 1;
+        }
+        .active #items li {
+            -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+            opacity: 1;
+        }
+        </style>
+
+
+    <script>
+        //fullPage settings
+        $(function() {
+            $('#WholePage').fullpage({
+                // Set page background
+                sectionsColor: ['#353535', '#353535', '#353535', '#353535'],
+                anchors: ['page1', 'page2', 'page3', 'page4'],
+                menu: '#menu',
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <!--Navigation options-->
+    <!--Reference: https://www.flaticon.com-->
+    <ul id="menu">
+        <li data-menuanchor="page1" class="active"><a href="#page1" title="Title Page"><img src="icon_homepage.png"></a></li>
+        <li data-menuanchor="page2"><a href="#page2" title="Heatmap"><img src="icon_checkin.png"></a></li>
+        <li data-menuanchor="page3"><a href="#page3" title="Business"><img src="icon_business.png"></a></li>
+        <li data-menuanchor="page4"><a href="#page4" title="Tube Counts"><img src="icon_tube.png"></a></li>
+        <li onclick="on()"><img src="icon_about.png" title="About"></li>
+    </ul>
+
+    <!-- PAGES -->
+    <div id="WholePage">
+
+        <!-- Page1: Title Page -->
+        <div class="section section1">
+            <div class="title-name">24-Hour Working People</div>
+            <div class="title-text">24-Hour Working People showing... The visualisations aim to... hope to understand...</div>
+            <img src="arrows_down.png" alt="Scroll down" class="downarrow" title="Scroll down to explore!">
+        </div>
+
+        <!-- Page2: Heatmap - Office Check-ins -->
+        <div class="section section2">
+            <!--Title-->
+            <div class="overlay">
+                <h2>24-Hour Working Activities Distribution</h2>
+                <p class="credit"> Foursquare Global-scale Check-in Dataset: <a href="https://sites.google.com/site/yangdingqi/home/foursquare-dataset">Foursquare Dataset</a>.</p>
+             </div>
+            <!--Map-->
+            <div class="slide">
+                <iframe src="24-Hour Working Activities.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
+            <!--Graphs-->
+            <div class="slide">
+                <iframe src="Graphs.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+
+        <!-- Page3: Business -->
+        <div class="section section3">
+            <!--Map1-->
+            <div class="slide">
+                <iframe src="Map21.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
+            <!--Map2-->
+            <div class="slide">
+                <iframe src="Map22.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+
+        <!-- Page4: Tube Counts-->
+        <div class="section section4">
+            <!--Map-->
+            <iframe src="map3.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="About" onclick="off()">
+        <div id="AboutText">
+            <h2>24-Hour Working People</h2>
+            <br/>
+            <p>
+                <br/>Creators: George Pyne, Qi Liu, Spyridoula Kasimati, Yunong Wang
+                <br/>Map engine: <a href="https://www.mapbox.com/" target="_blank">Mapbox GL JS</a>
+                <br/>Github: <a href="https://github.com/working-hour-culture/working-hour-culture.github.io" target="_blank">@working-hour-culture</a>
+                <br/>
+                <br/>@2019 CASA, University College London</p>
+        </div>
+    </div>
+
+    <script>
+        // Click "About" Function
+        function on() {
+            document.getElementById("About").style.display = "block";
+        }
+        function off() {
+            document.getElementById("About").style.display = "none";
+        }
+        
+    </script>
+</body>
+</html>
