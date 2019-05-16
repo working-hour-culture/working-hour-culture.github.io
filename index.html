@@ -15,12 +15,25 @@
 
     <!--Style Sheet-->
     <!--Reference: https://fonts.google.com/-->
-    <link href='https://fonts.googleapis.com/css?family=Yesteryear' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     
     <style>
+        
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        /* The image used on the first page */
+        .bg {
+            background-image: url("globe_black_white_HD.jpg");
+            height: 100%;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }        
         /* Navigation options */
         #menu {
             position: fixed;
@@ -109,11 +122,11 @@
         /* Text style */
         /* Page1 */
         .title-name {
-            text-align: left;
             position: relative;
-            left: 2%;
-            font-family: "Yesteryear";
-            font-size: 7vw;
+            text-align: center;
+            margin: 1%;
+            font-family: "Montserrat";
+            font-size: 4vw;
             font-weight: normal;
             animation: fadeIn 6s;
         }
@@ -166,6 +179,19 @@
             background-color: black;
             opacity: 0.8;
             text-align: left;
+        }
+        .overlay1 {
+            font-family: "Open Sans";
+            position: absolute;
+            width:60%;
+            top: 35%;
+            left: 20%;
+            z-index: 2;
+            padding:1px;
+            border-radius: 5px;
+            margin-bottom: 4px;
+            color: white;
+            background-color: rgba(45,43,63,0.8);
         }
         
         /* The last page - "About" */
@@ -228,8 +254,8 @@
         $(function() {
             $('#WholePage').fullpage({
                 // Set page background
-                sectionsColor: ['#353535', '#353535', '#353535', '#353535'],
-                anchors: ['page1', 'page2', 'page3', 'page4'],
+                sectionsColor: ['#353535', '#353535', '#353535', '#353535', '#353535'],
+                anchors: ['page1', 'page2', 'page3', 'page4', 'page5'],
                 menu: '#menu',
             });
         });
@@ -241,24 +267,33 @@
     <!--Reference: https://www.flaticon.com-->
     <ul id="menu">
         <li data-menuanchor="page1" class="active"><a href="#page1" title="Title Page"><img src="images/icon_homepage.png"></a></li>
-        <li data-menuanchor="page2"><a href="#page2" title="Heatmap"><img src="images/icon_checkin.png"></a></li>
-        <li data-menuanchor="page3"><a href="#page3" title="Business"><img src="images/icon_business.png"></a></li>
-        <li data-menuanchor="page4"><a href="#page4" title="Tube Counts"><img src="images/icon_tube.png"></a></li>
+        <li data-menuanchor="page2"><a href="#page2" title="Introduction"><img src="images/icon_homepage.png"></a></li>
+        <li data-menuanchor="page3"><a href="#page3" title="Heatmap"><img src="images/icon_checkin.png"></a></li>
+        <li data-menuanchor="page4"><a href="#page4" title="Business"><img src="images/icon_business.png"></a></li>
+        <li data-menuanchor="page5"><a href="#page5" title="Tube Counts"><img src="images/icon_tube.png"></a></li>
         <li onclick="on()"><img src="images/icon_about.png" title="About"></li>
     </ul>
 
     <!-- PAGES -->
     <div id="WholePage">
-
+        
         <!-- Page1: Title Page -->
         <div class="section section1">
-            <div class="title-name">24-Hour Working People</div>
-            <div class="title-text">24-Hour Working People showing... The visualisations aim to... hope to understand...</div>
+            <div class="bg"></div>
+            <div class="overlay1">
+                <h4 class="title-name">Working Hour Cultures across the Globe</h4>
+            </div>
+            <img src="arrows_down.png" alt="Scroll down" class="downarrow" title="Scroll down to explore!">
+        </div>
+        
+        <!-- Page2: Introduction Page -->
+        <div class="section section2">
+            <div class="title-text">Working hour cultures across the globe showing... The visualisations aim to... hope to understand...</div>
             <img src="images/arrows_down.png" alt="Scroll down" class="downarrow" title="Scroll down to explore!">
         </div>
 
-        <!-- Page2: Heatmap - Office Check-ins -->
-        <div class="section section2">
+        <!-- Page3: Heatmap - Office Check-ins -->
+        <div class="section section3">
             <!--Title-->
             <div class="overlay">
                 <h2>24-Hour Working Activities Distribution</h2>
@@ -266,16 +301,16 @@
              </div>
             <!--Map-->
             <div class="slide">
-                <iframe src="24-Hour Working Activities.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+                <iframe src="heatmap/24-Hour Working Activities.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
             </div>
             <!--Graphs-->
             <div class="slide">
-                <iframe src="Graphs.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
+                <iframe src="heatmap/Graphs.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
             </div>
         </div>
 
-        <!-- Page3: Business -->
-        <div class="section section3">
+        <!-- Page4: Business -->
+        <div class="section section4">
             <!--Map1: The Number of Whole Indusrty-->
             <div class="slide">
                 <iframe src="business/whole.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
@@ -294,8 +329,8 @@
             </div>
         </div>
 
-        <!-- Page4: Tube Counts-->
-        <div class="section section4">
+        <!-- Page5: Tube Counts-->
+        <div class="section section5">
             <!--Map-->
             <iframe src="tube/tube stations_count of exits.html" height="100%" width="100%" frameBorder="0" scrolling="no"></iframe>
         </div>
@@ -304,7 +339,7 @@
     <!-- About Page -->
     <div id="About" onclick="off()">
         <div id="AboutText">
-            <h2>24-Hour Working People</h2>
+            <h2>Working Hour Cultures across the Globe</h2>
             <br/>
             <p>
                 <br/>Creators: George Pyne, Qi Liu, Spyridoula Kasimati, Yunong Wang
