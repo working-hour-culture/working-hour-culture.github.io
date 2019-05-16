@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>London Businesses Choropleth Map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+    
+<body>
+
+<style>
+
+.map { position:absolute; top:0; bottom:0; width:100%; }
+        
+.map-overlay {
+        font-family: 'Montserrat';
+        position: absolute;
+        width: 470px;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        }
+    
+.map-overlay .map-overlay-inner {
+        background-color: black;
+        color: white;
+        opacity: 0.8;
+        box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+        border-radius: 3px;
+        padding: 10px;
+        margin-bottom: 10px;
+        }
+
+.map-overlay .map-hover {
+        background-color: black;
+        color: white;
+        opacity: 0.8;
+        box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 3px;
+        top: 180px;
+        left: 45px;
+        }
+
+    
+.legend {
+    background-color: #fff;
+    border-radius: 3px;
+    bottom: 30px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    z-index: 1;
+}
+
+.legend h4 {
+    margin: 0 0 10px;
+}
+
+.legend div span {
+    border-radius: 50%;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 10px;
+}
+
+</style>
+
+<div id='map'></div>
+
+<div class='map-overlay top'>
+    <div class='map-overlay-inner'>
+        <h2>London Retail Industry Choropleth Map</h2>
+        <p class="credit"> Data source: <a href=" https://data.london.gov.uk/dataset/directory-of-london-businesses">London Business Data</a >.</p >
+    </div>
+    
+    <div class='map-hover'>
+        <h2 id="hovername">Hover over borough</h2>
+    </div>
+</div>
+
+<div id='borough-legend' class='legend'>
+    <h4>Counts</h4>
+    <div><span style='background-color: #034e7b'></span>4397</div>
+    <div><span style='background-color: #0570b0'></span>2145</div>
+    <div><span style='background-color: #3690c0'></span>1607</div>
+    <div><span style='background-color: #74a9cf'></span>1366</div>
+    <div><span style='background-color: #a6bddb'></span>1142</div>
+    <div><span style='background-color: #d0d1e6'></span>874</div>
+    <div><span style='background-color: #f1eef6'></span>632</div>
+</div>
+
+<div id='ward-legend' class='legend' style='display: none;'>
+    <h4>Counts</h4>
+    <div><span style='background-color: #034e7b'></span>2906</div>
+    <div><span style='background-color: #0570b0'></span>544</div>
+    <div><span style='background-color: #3690c0'></span>297</div>
+    <div><span style='background-color: #74a9cf'></span>179</div>
+    <div><span style='background-color: #a6bddb'></span>101</div>
+    <div><span style='background-color: #d0d1e6'></span>56</div>
+    <div><span style='background-color: #f1eef6'></span>19</div>
+</div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidWNmbnl3YSIsImEiOiJjam41eGNvM3ExMmw0M3ZxeXZ4cG9zY3phIn0.QEt3X1_rU-LhaL3-XvM74g';
+
+//basemap
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/dark-v10',
+    center: [-0.1, 51.5074],
+    minZoom: 9,
+    zoom: 9
+});
+
+var zoomThreshold = 10;
+
+map.on('load', function() {
+    
+    map.addLayer({
+        'id': 'businesses_borough_boundary',
+        'source': {
+            type: 'vector',
+            url:'mapbox://ucfnywa.bsk5beu7'
+        },
+        'source-layer': 'businesses_borough-1a0ngy',
+        'type': 'line',
+        'paint': {
+            'line-color':'#fff',
+            'line-width':0.3,
+            'line-opacity': 0.75
+        }
+    });
+
+    
+    map.addLayer({
+        'id': 'businesses_borough',
+        'source': {
+            type: 'vector',
+            url:'mapbox://ucfnywa.bsk5beu7'
+        },
+        'source-layer': 'businesses_borough-1a0ngy',
+        'maxzoom': zoomThreshold,
+        'type': 'fill',
+        'paint': {
+            'fill-color': [
+                'interpolate',
+                ['linear'],
+                ['get', 'retail'],
+                632, '#f1eef6',
+                874, '#d0d1e6',
+                1142, '#a6bddb',
+                1366, '#74a9cf',
+                1607, '#3690c0',
+                2145, '#0570b0',
+                4397, '#034e7b',
+            ],
+            'fill-opacity': 0.75
+        }
+    }, 'waterway-label');
+
+    map.addLayer({
+        'id': 'businesses_ward',
+        'source': {
+            type: 'vector',
+            url:'mapbox://ucfnywa.8mjs86ld'
+        },
+        'source-layer': 'businesses_ward-3x6ak4',
+        'minzoom': zoomThreshold,
+        'type': 'fill',
+        'paint': {
+            'fill-color': [
+                'interpolate',
+                ['linear'],
+                ['get', 'retail'],
+                19, '#f1eef6',
+                56, '#d0d1e6',
+                101, '#a6bddb',
+                179, '#74a9cf',
+                297, '#3690c0',
+                544, '#0570b0',
+                2906, '#034e7b',
+            ],
+            'fill-opacity': 0.75
+        }
+    }, 'waterway-label');
+    
+});
+
+var boroughLegendEl = document.getElementById('borough-legend');
+var wardLegendEl = document.getElementById('ward-legend');
+map.on('zoom', function() {
+    if (map.getZoom() > zoomThreshold) {
+        boroughLegendEl.style.display = 'none';
+        wardLegendEl.style.display = 'block';
+    } else {
+        boroughLegendEl.style.display = 'block';
+        wardLegendEl.style.display = 'none';
+    }
+});
+    
+// Add the "hover highlight" function for company numbers at borough level
+map.on('mousemove', function(e) {
+    var la = map.queryRenderedFeatures(e.point, {
+        layers: ['businesses_borough']
+    });
+    if (la.length==1) {
+        map.setFilter('businesses_borough_boundary', ['==','name',la[0].properties.name]);
+        console.log(la[0].properties.name);
+        document.getElementById('hovername').innerHTML = '<h5>' + 'Company counts in ' + la[0].properties.name + ':' + '</h5>' + '<h6>' + la[0].properties.retail +'</h6>';
+        console.log(la[0].id);
+        console.log(la);
+    } else {
+        map.setFilter('businesses_borough_boundary', ['==','name','null']);
+        console.log('No features');
+        document.getElementById('hovername').innerHTML = "Hover over borough";
+    }
+});
+
+</script>
+
+</body>
+</html>
