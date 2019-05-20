@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Dominant Industries in London</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet'/>
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        .map-overlay {
+            font-family: "Open Sans";
+            font-size: 15px;
+            position: absolute;
+            width: 480px;
+            min-width: 380px;
+            top: 12%;
+            left: 0px;
+            padding: 10px;
+        }
+        .map-overlay .map-overlay-inner {
+            background-color: black;
+            color: white;
+            opacity: 0.9;
+            box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+            border-radius: 3px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .map-overlay .map-hover {
+            background-color: black;
+            color: white;
+            opacity: 0.8;
+            box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 3px;
+        }
+        .map-overlay table {
+            border: none;
+            width: 100%;
+        }
+        .map-overlay h2 {
+            line-height: 24px;
+            display: block;
+            margin: 0 0 10px;
+        }
+        .map-overlay input {
+            background-color: transparent;
+            display: inline-block;
+            width: 100%;
+            min-width: 220px;
+            position: relative;
+            margin: 6px 0 0 0;
+            cursor: ew-resize;
+        }
+        /* Legend layout */
+        .legend {
+            background-color: black;
+            color: white;
+            opacity: 0.7;
+            border-radius: 3px;
+            bottom: 30px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.10);
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            padding: 10px;
+            position: absolute;
+            right: 10px;
+            z-index: 1;
+        }
+        .legend h4 {
+            margin: 0 0 10px;
+        }
+        .legend div span {
+            border-radius: 50%;
+            display: inline-block;
+            height: 10px;
+            margin-right: 5px;
+            width: 10px;
+        }
+        </style> 
+</head>
+    
+<body>
+<div id='map'></div>
+    <div id='industry-legend' class='legend'>
+        <h4>Dominant Industries</h4>
+        <div><span style='background-color: #c6f29d'></span>Construction</div>
+        <div><span style='background-color: #f7b72c'></span>Wholesale and retail trade</div>
+        <div><span style='background-color: #f0f2b0'></span>Professional, scientific and technical activities</div>
+        <div><span style='background-color: #7acfe2'></span>Information and communication</div>
+        <div><span style='background-color: #79a5e2'></span>Other services</div>
+        <div><span style='background-color: #5666e2'></span>Administrative and support service</div>
+        <div><span style='background-color: white'></span>Human health and social work</div>
+        <div><span style='background-color: #23722a'></span>Transportation and storage</div>
+        <div><span style='background-color: #ffc282'></span>Real Estate</div>
+        <div><span style='background-color: #ebf430'></span>Accommodation and food service activities</div>
+        <div><span style='background-color: red'></span>Financial and insurance activities</div>
+    </div>
+
+    <div class='map-overlay top'>
+        <div class='map-overlay-inner'>
+            <h2>The Number of Office Check-ins in London</h2>
+            <table><tr><td>
+                <input id='slider' type='range' min='0' max='23' step='1' value='0' list='tickmarks' />
+                <datalist id="tickmarks">
+                    <option value="0" label="0">
+                    <option value="1">
+                    <option value="2">
+                    <option value="3">
+                    <option value="4" label="4">
+                    <option value="5">
+                    <option value="6">
+                    <option value="7">
+                    <option value="8" label="8">
+                    <option value="9">
+                    <option value="10">
+                    <option value="11">
+                    <option value="12" label="12">
+                    <option value="13">
+                    <option value="14">
+                    <option value="15">
+                    <option value="16" label="16">
+                    <option value="17">
+                    <option value="18">
+                    <option value="19">
+                    <option value="20" label="20">
+                    <option value="21">
+                    <option value="22">
+                    <option value="23">
+                </datalist>
+                </td>
+                <td>
+                    <label id='time'>0</label>
+                </td>
+                </tr></table>
+        </div>
+    </div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY2FzYTAwMDMiLCJhIjoiY2p0enluaHh0MGJ4YjQxbWUzdmh6dWEwNSJ9.mbgxLvW6YvE4kxM5w6686g';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/casa0003/cjv9ti3od2klt1fqjvey69t61',
+        center: [-0.1, 51.5074],   //starting position
+        zoom: 9.5,
+        pitch: 90,
+        bearing: 330,
+    });
+    
+    // Create an array of the time
+    var times = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+    
+    map.on('load', function() {
+
+        // Ward level check-ins counts
+        // The main function used to change the time
+        function setTimeWard(time) {
+            document.getElementById('time').textContent = times[time];
+            console.log(pp);
+            var pp = map.getPaintProperty('Check-ins ward level','fill-extrusion-height');
+            pp.property = "Count0" + times[time];
+            map.setPaintProperty('Check-ins ward level','fill-extrusion-height',pp);
+            console.log(map.getPaintProperty('Check-ins ward level','fill-extrusion-height'));
+            
+            map.setLayoutProperty('Check-ins ward level', 'visibility', 'none');
+            map.setLayoutProperty('Check-ins ward level', 'visibility', 'visible');
+            
+            var timecol = "Count0" + String(times[time]);
+            var textfield = "{" + timecol + "}";
+            console.log(textfield);
+            map.setLayoutProperty('labels', 'text-field', textfield);
+            var filters = ['>', timecol, 30];
+            map.setFilter('labels', filters);
+        }
+        
+        // Add the Office Check-ins Counts (ward level) Layer
+        map.addLayer({
+            id: 'Check-ins ward level',
+            type: 'fill-extrusion',
+            source: {
+                type: 'vector',
+                url: 'mapbox://casa0003.8rey9432'
+            },
+            'source-layer': 'checkins_per_ward-0sp986',
+            paint: {
+                'fill-extrusion-color':{
+                    'type': "categorical",
+                    'property': 'Industry',
+                    'stops':[
+                        ['a', '#c6f29d'],
+                        ['b', '#f7b72c'],
+                        ['c', '#f0f2b0'],
+                        ['d','#7acfe2'],
+                        ['e', '#79a5e2'],
+                        ['f', '#5666e2'],
+                        ['g', 'white'],
+                        ['h', '#23722a'],
+                        ['i', '#ffc282'],
+                        ['j', '#ebf430'],
+                        ['k', 'red']
+                    ]},
+                'fill-extrusion-height': 
+                {property: 'Count00',
+                 // Different levels of the classification
+                 stops: [
+                     [0, 0],
+                     [20, 2000],
+                     [40, 6000], 
+                     [60, 10000],
+                     [80, 14000], 
+                     [100, 18000],
+                     [120, 20000]
+                 ]
+                },
+                'fill-extrusion-opacity': 1},
+        // Insert the layer beneath the first symbol layer
+         }, 'waterway-label');
+        
+        // Assign an event listner to the slider so that the setTime function runs when the user changes the slider
+        document.getElementById('slider').addEventListener('input', function(e) {
+            var time = parseInt(e.target.value);
+            setTimeWard(time);
+        });
+});
+
+</script>
+
+</body>
+</html>
