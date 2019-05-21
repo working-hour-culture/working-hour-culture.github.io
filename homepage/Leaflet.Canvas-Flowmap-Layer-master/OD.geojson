@@ -1,0 +1,20 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates":[109.6091129, 23.09653465]
+  },
+  "properties": {
+    "origin_id": 0,
+    "origin_city": "London",
+    "origin_country": "UK",
+    "origin_lon": 51.1537,
+    "origin_lat": 0.1821,
+    "destination_id": 1,
+    "destination_city": "Toronto",
+    "destination_country": "Canada",
+    "destination_lon": 43.6777,
+    "destination_lat": 79.6248
+  }
+}
+
