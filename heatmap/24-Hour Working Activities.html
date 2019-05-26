@@ -218,6 +218,7 @@
         }
 	    
         /* Range slider layout */
+	/* Reference: https://github.com/london-rhythms/london-rhythms.github.io */
         .range-slider {
             -webkit-appearance: none; /* For custom style slider */
             width: 100%; /* Specific width is required for Firefox. */
@@ -309,6 +310,7 @@
             border-radius: 2.6px;
             box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
         }
+	
         /* The style of "fly to" function */
         #features {
             position: absolute;
@@ -340,6 +342,7 @@
         }
         
         /* Graph Show and Hide Button */
+	/* Reference: https://github.com/london-rhythms/london-rhythms.github.io */
         #button1 {
             background: #202020;
             border-radius: 10px;
@@ -862,7 +865,8 @@
         }
     });
     
-    //Create "Weekday" and "Weekend" button to show or hide both heatmap and point (circle layer)
+    // Create "Weekday" and "Weekend" button to show or hide both heatmap and point (circle layer)
+    // Reference: https://github.com/london-rhythms/london-rhythms.github.io
     var toggleableLayerIds = ['Weekday', 'Weekend'];
     for (var i = 0; i < toggleableLayerIds.length; i++) {
         var id = toggleableLayerIds[i];
@@ -922,6 +926,7 @@
     }
     
     // Set the slider and play pause function
+    // Reference: https://github.com/london-rhythms/london-rhythms.github.io
     var interval;
     
     // "+" button
